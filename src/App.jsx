@@ -8,7 +8,9 @@ const App = () => {
     <div className="w-full">
 
     <div className="w-full max-w-md mx-auto relative p-6 bg-white/30  backdrop-blur-sm border border-gray-60 rounded ">
-    <div className="w-full mb-1">
+                    <form onSubmit={(e) => e.preventDefault()}>
+
+                    <div className="w-full mb-1">
                         <InputCurr
                             label="From"
                         />
@@ -23,6 +25,11 @@ const App = () => {
                             label="To"
                         />
                     </div>
+                    <div className="w-full px-4">
+                      <button className='w-full bg-blue-500 text-white py-2 rounded-lg'>Convert from USD to PKR</button>
+                    </div>
+                    </form>
+
     </div>
     </div>
     </div>
