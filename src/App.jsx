@@ -6,9 +6,9 @@ import Axios from "axios";
 import SwapButton from './Components/SwapButton'
 import useCurrencyInfo from './Hooks/useCurrencyInfo'
 const App = () => {
-  const [amount,setAmount]=useState(0);
+  const [amount,setAmount]=useState();
   const [fromTo,setFromTo]=useState({from:"usd",to:"pkr"});
-  const [convertedAmount,setConvertedAmount]=useState(0);
+  const [convertedAmount,setConvertedAmount]=useState();
   const [options,setOptions]=useState([]);
   const [currenInfo,setCurrenInfo]=useState({});
  

@@ -23,7 +23,7 @@ const InputCurr = ({
         <div className="w-1/2">
           <input
             id={amountInputID}
-            type="number"
+            type="text"
             placeholder="Amount"
             className="outline-none w-full bg-transparent py-1.5"
             disabled={amountDisable}
