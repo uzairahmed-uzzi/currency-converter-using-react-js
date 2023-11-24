@@ -6,18 +6,28 @@ import Axios from "axios";
 import SwapButton from './Components/SwapButton'
 import useCurrencyInfo from './Hooks/useCurrencyInfo'
 const App = () => {
-  const [amount,setAmount]=useState();
+  const [amount,setAmount]=useState("0");
   const [fromTo,setFromTo]=useState({from:"usd",to:"pkr"});
-  const [convertedAmount,setConvertedAmount]=useState();
+  const [convertedAmount,setConvertedAmount]=useState(0);
   const [options,setOptions]=useState([]);
   const [currenInfo,setCurrenInfo]=useState({});
  
 
-
+  const convert=()=>{
+    setConvertedAmount(amount * currenInfo[fromTo.to]);
+  }
+const amountChangeHandle=(inp)=>{
+  let convertedInput;
+  if(!isNaN(inp)){
+    convertedInput=inp;
+  }else{
+    convertedInput=0;
+  }
+  setAmount(convertedInput);
+}
   const getData=async ()=>{
     try{
-        const res = await Axios.get(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromTo.from}.json`)
-        console.log(res.data[fromTo.from])    
+        const res = await Axios.get(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromTo.from}.json`);   
         setCurrenInfo( res.data[fromTo.from]);
     }
     catch(err){
@@ -34,13 +44,12 @@ useEffect(()=>{
 },[currenInfo])
    console.log("Currency Info===>",currenInfo);
   const swap=()=>{
-    setFromTo({from:fromTo.to,to:fromTo.from});
-    setConvertedAmount(amount);
+    setFromTo((prev)=>({from:prev.to,to:prev.from}));
     setAmount(convertedAmount);
   }
-  const convert=()=>{
-    setConvertedAmount(amount * currenInfo[fromTo.to]);
-  }
+  useEffect(()=>{
+    convert();
+  },[amount])
   return (
     <div className='w-full h-screen bg-cover bg-no-repeat flex flex-wrap justify-center items-center' style={{backgroundImage:`url("${Bg}")`}}>
     <div className="w-full">
@@ -57,7 +66,7 @@ useEffect(()=>{
                             amount={amount}
                             currencyOptions={options}
                             onCurrencyChange={(currency)=>setFromTo((prev)=>({...prev,from:currency}))}
-                            onAmountChange={(amount)=>setAmount(amount)}
+                            onAmountChange={(amount)=>amountChangeHandle(amount)}
                             selectCurr={fromTo.from}
 
                         />
@@ -78,7 +87,7 @@ useEffect(()=>{
                         />
                     </div>
                     <div className="w-full px-4">
-                      <button onClick={() => convert()} className='w-full bg-blue-500 text-white py-2 rounded-lg'>Convert from {fromTo.from.toUpperCase()} to {fromTo.to.toUpperCase()}</button>
+                      {/* <button onClick={() => convert()} className='w-full bg-blue-500 text-white py-2 rounded-lg'>Convert from {fromTo.from.toUpperCase()} to {fromTo.to.toUpperCase()}</button> */}
                     </div>
                     </form>
 

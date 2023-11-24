@@ -29,7 +29,7 @@ const InputCurr = ({
             disabled={amountDisable}
             value={amount}
             onChange={(e) =>
-              onAmountChange && onAmountChange(Number(e.target.value))
+              onAmountChange && onAmountChange(parseFloat(e.target.value))
             }
           />
         </div>{" "}
